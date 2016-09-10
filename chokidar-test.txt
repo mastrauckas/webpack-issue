@@ -1,0 +1,1906 @@
+
+> chokidar@1.6.0 test /mnt/d/projects/chokidar
+> istanbul test node_modules/mocha/bin/_mocha
+
+
+
+  chokidar
+    ✓ should expose public API methods
+    fs.watch (non-polling)
+      watch a directory
+        ✓ should produce an instance of chokidar.FSWatcher
+        1) "after each" hook
+      watch individual files
+        2) should detect changes
+        3) should detect unlinks
+        4) should detect unlink and re-add
+        5) should ignore unwatched siblings
+      renamed directory
+        6) should emit `add` for a file in a renamed directory
+      watch non-existent paths
+        7) should watch non-existent file and detect add
+        8) should watch non-existent dir and detect addDir/add
+      watch glob patterns
+        9) should correctly watch and emit based on glob input
+        10) should respect negated glob patterns
+        11) should traverse subdirs to match globstar patterns
+        12) should resolve relative paths with glob patterns
+        13) should correctly handle conflicting glob patterns
+        14) should correctly handle intersecting glob patterns
+        15) should not confuse glob-like filenames with globs
+        16) should not prematurely filter dirs against complex globstar patterns
+        17) should emit matching dir events
+      watch symlinks
+        18) should watch symlinked dirs
+        19) should watch symlinked files
+        20) should follow symlinked files within a normal dir
+        21) should watch paths with a symlinked parent
+        22) should not recurse indefinitely on circular symlinks
+        23) should recognize changes following symlinked dirs
+        24) should follow newly created symlinks
+        25) should watch symlinks as files when followSymlinks:false
+        26) should watch symlinks within a watched dir as files when followSymlinks:false
+        27) should not reuse watcher when following a symlink to elsewhere
+        28) should properly match glob patterns that include a symlinked dir
+      watch arrays of paths/globs
+        29) should watch all paths in an array
+        30) should accommodate nested arrays in input
+        ✓ should throw if provided any non-string paths
+      watch options
+        ignoreInitial
+          false
+            31) should emit `add` events for preexisting files
+            32) should emit `addDir` event for watched dir
+            33) should emit `addDir` events for preexisting dirs
+          true
+            34) should ignore inital add events
+            35) should ignore add events on a subsequent .add()
+            36) should notice when a file appears in an empty directory
+            37) should emit a change on a preexisting file as a change
+            38) should not emit for preexisting dirs when depth is 0
+        ignored
+          39) should check ignore after stating
+          ✓ should not choke on an ignored watch path
+          40) should ignore the contents of ignored dirs
+          41) should allow regex/fn ignores
+        depth
+          42) should not recurse if depth is 0
+          43) should recurse to specified depth
+          44) should respect depth setting when following symlinks
+          45) should respect depth setting when following a new symlink
+          46) should correctly handle dir events when depth is 0
+        atomic
+          47) should ignore vim/emacs/Sublime swapfiles
+          48) should ignore stale tilde files
+        cwd
+          49) should emit relative paths based on cwd
+          50) should emit `addDir` with alwaysStat for renamed directory
+          51) should allow separate watchers to have different cwds
+          52) should ignore files even with cwd
+        ignorePermissionErrors
+          false
+            53) should not watch files without read permissions
+          true
+            ✓ should watch unreadable files if possible
+            ✓ should not choke on non-existent files
+        awaitWriteFinish
+          ✓ should use default options if none given
+          54) should not emit add event before a file is fully written
+          55) should wait for the file to be fully written before emitting the add event
+          56) should emit with the final stats
+          57) should not emit change event while a file has not been fully written
+          58) should not emit change event before an existing file is fully updated
+          59) should wait for an existing file to be fully updated before emitting the change event
+          60) should emit change event after the file is fully written
+          61) should not raise any event for a file that was deleted before fully written
+          ✓ should be compatible with the cwd option
+        getWatched
+          62) should return the watched paths
+          63) should set keys relative to cwd & include added paths
+        unwatch
+          64) should stop watching unwatched paths
+          65) "before each" hook
+        close
+          66) should ignore further events on close
+        env variable option override
+          CHOKIDAR_USEPOLLING
+            ✓ should make options.usePolling `true` when CHOKIDAR_USEPOLLING is set to true
+            ✓ should make options.usePolling `true` when CHOKIDAR_USEPOLLING is set to 1
+            67) should make options.usePolling `false` when CHOKIDAR_USEPOLLING is set to false
+            68) should make options.usePolling `false` when CHOKIDAR_USEPOLLING is set to 0
+            ✓ should not attenuate options.usePolling when CHOKIDAR_USEPOLLING is set to an arbitrary value
+      fs.watchFile (polling)
+        watch a directory
+          ✓ should produce an instance of chokidar.FSWatcher
+          ✓ should expose public API methods
+          ✓ should emit `add` event when file was added (70ms)
+          ✓ should emit `add` event when file was added (72ms)
+          69) "before each" hook: clean for "should unwatch relative paths"
+          70) "before each" hook: clean for "should unwatch relative paths"
+
+  15 passing (2s)
+  70 failing
+
+  1) chokidar fs.watch (non-polling) watch a directory "after each" hook:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/2/change.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  2) chokidar fs.watch (non-polling) watch individual files should detect changes:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/3/change.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  3) chokidar fs.watch (non-polling) watch individual files should detect unlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/4/unlink.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  4) chokidar fs.watch (non-polling) watch individual files should detect unlink and re-add:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/5/unlink.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  5) chokidar fs.watch (non-polling) watch individual files should ignore unwatched siblings:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/6 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  6) chokidar fs.watch (non-polling) renamed directory should emit `add` for a file in a renamed directory:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/7 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  7) chokidar fs.watch (non-polling) watch non-existent paths should watch non-existent file and detect add:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/8 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  8) chokidar fs.watch (non-polling) watch non-existent paths should watch non-existent dir and detect addDir/add:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/9 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  9) chokidar fs.watch (non-polling) watch glob patterns should correctly watch and emit based on glob input:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/10 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  10) chokidar fs.watch (non-polling) watch glob patterns should respect negated glob patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/11 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  11) chokidar fs.watch (non-polling) watch glob patterns should traverse subdirs to match globstar patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  12) chokidar fs.watch (non-polling) watch glob patterns should resolve relative paths with glob patterns:
+     Uncaught Error: watch . EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  13) chokidar fs.watch (non-polling) watch glob patterns should correctly handle conflicting glob patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/14 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  14) chokidar fs.watch (non-polling) watch glob patterns should correctly handle intersecting glob patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/15 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  15) chokidar fs.watch (non-polling) watch glob patterns should not confuse glob-like filenames with globs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/16 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  16) chokidar fs.watch (non-polling) watch glob patterns should not prematurely filter dirs against complex globstar patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  17) chokidar fs.watch (non-polling) watch glob patterns should emit matching dir events:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/18 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  18) chokidar fs.watch (non-polling) watch symlinks should watch symlinked dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/19-link EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  19) chokidar fs.watch (non-polling) watch symlinks should watch symlinked files:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/20/link.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  20) chokidar fs.watch (non-polling) watch symlinks should follow symlinked files within a normal dir:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/21/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  21) chokidar fs.watch (non-polling) watch symlinks should watch paths with a symlinked parent:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/22-link/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  22) chokidar fs.watch (non-polling) watch symlinks should not recurse indefinitely on circular symlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/23 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  23) chokidar fs.watch (non-polling) watch symlinks should recognize changes following symlinked dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/24-link EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  24) chokidar fs.watch (non-polling) watch symlinks should follow newly created symlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/25 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  25) chokidar fs.watch (non-polling) watch symlinks should watch symlinks as files when followSymlinks:false:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:465:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  26) chokidar fs.watch (non-polling) watch symlinks should watch symlinks within a watched dir as files when followSymlinks:false:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/27 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  27) chokidar fs.watch (non-polling) watch symlinks should not reuse watcher when following a symlink to elsewhere:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/28/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  28) chokidar fs.watch (non-polling) watch symlinks should properly match glob patterns that include a symlinked dir:
+     Uncaught Error: watch test-fixtures/29-link EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  29) chokidar fs.watch (non-polling) watch arrays of paths/globs should watch all paths in an array:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/30/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  30) chokidar fs.watch (non-polling) watch arrays of paths/globs should accommodate nested arrays in input:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/31/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  31) chokidar fs.watch (non-polling) watch options ignoreInitial false should emit `add` events for preexisting files:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/33 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  32) chokidar fs.watch (non-polling) watch options ignoreInitial false should emit `addDir` event for watched dir:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/34 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  33) chokidar fs.watch (non-polling) watch options ignoreInitial false should emit `addDir` events for preexisting dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/35 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  34) chokidar fs.watch (non-polling) watch options ignoreInitial true should ignore inital add events:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/36 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  35) chokidar fs.watch (non-polling) watch options ignoreInitial true should ignore add events on a subsequent .add():
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/37 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  36) chokidar fs.watch (non-polling) watch options ignoreInitial true should notice when a file appears in an empty directory:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/38 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  37) chokidar fs.watch (non-polling) watch options ignoreInitial true should emit a change on a preexisting file as a change:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/39 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  38) chokidar fs.watch (non-polling) watch options ignoreInitial true should not emit for preexisting dirs when depth is 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/40 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  39) chokidar fs.watch (non-polling) watch options ignored should check ignore after stating:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/41/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  40) chokidar fs.watch (non-polling) watch options ignored should ignore the contents of ignored dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/43 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  41) chokidar fs.watch (non-polling) watch options ignored should allow regex/fn ignores:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/44 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  42) chokidar fs.watch (non-polling) watch options depth should not recurse if depth is 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/45 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  43) chokidar fs.watch (non-polling) watch options depth should recurse to specified depth:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/46 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  44) chokidar fs.watch (non-polling) watch options depth should respect depth setting when following symlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/47 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  45) chokidar fs.watch (non-polling) watch options depth should respect depth setting when following a new symlink:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/48 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  46) chokidar fs.watch (non-polling) watch options depth should correctly handle dir events when depth is 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/49 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  47) chokidar fs.watch (non-polling) watch options atomic should ignore vim/emacs/Sublime swapfiles:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/50 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  48) chokidar fs.watch (non-polling) watch options atomic should ignore stale tilde files:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/51 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  49) chokidar fs.watch (non-polling) watch options cwd should emit relative paths based on cwd:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/52 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  50) chokidar fs.watch (non-polling) watch options cwd should emit `addDir` with alwaysStat for renamed directory:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/53 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  51) chokidar fs.watch (non-polling) watch options cwd should allow separate watchers to have different cwds:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/54 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  52) chokidar fs.watch (non-polling) watch options cwd should ignore files even with cwd:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/55 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  53) chokidar fs.watch (non-polling) watch options ignorePermissionErrors false should not watch files without read permissions:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/56 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  54) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not emit add event before a file is fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/60 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  55) chokidar fs.watch (non-polling) watch options awaitWriteFinish should wait for the file to be fully written before emitting the add event:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/61 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  56) chokidar fs.watch (non-polling) watch options awaitWriteFinish should emit with the final stats:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/62 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  57) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not emit change event while a file has not been fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/63 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  58) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not emit change event before an existing file is fully updated:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/64 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  59) chokidar fs.watch (non-polling) watch options awaitWriteFinish should wait for an existing file to be fully updated before emitting the change event:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/65 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  60) chokidar fs.watch (non-polling) watch options awaitWriteFinish should emit change event after the file is fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/66 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  61) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not raise any event for a file that was deleted before fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/67 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  62) chokidar fs.watch (non-polling) getWatched should return the watched paths:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/69 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  63) chokidar fs.watch (non-polling) getWatched should set keys relative to cwd & include added paths:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/70 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  64) chokidar fs.watch (non-polling) unwatch should stop watching unwatched paths:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/71/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  65) chokidar fs.watch (non-polling) unwatch "before each" hook:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/72 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  66) chokidar fs.watch (non-polling) close should ignore further events on close:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/73 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  67) chokidar fs.watch (non-polling) env variable option override CHOKIDAR_USEPOLLING should make options.usePolling `false` when CHOKIDAR_USEPOLLING is set to false:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/76 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  68) chokidar fs.watch (non-polling) env variable option override CHOKIDAR_USEPOLLING should make options.usePolling `false` when CHOKIDAR_USEPOLLING is set to 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/77 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  69) chokidar fs.watch (non-polling) "before each" hook: clean for "should unwatch relative paths":
+     TypeError: Cannot read property 'call' of undefined
+  
+
+  70) chokidar fs.watch (non-polling) "before each" hook: clean for "should unwatch relative paths":
+     TypeError: Cannot read property 'call' of undefined
+  
+
+
+
+
+
+  15 passing (2s)
+  70 failing
+
+  1) chokidar fs.watch (non-polling) watch a directory "after each" hook:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/2/change.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  2) chokidar fs.watch (non-polling) watch individual files should detect changes:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/3/change.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  3) chokidar fs.watch (non-polling) watch individual files should detect unlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/4/unlink.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  4) chokidar fs.watch (non-polling) watch individual files should detect unlink and re-add:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/5/unlink.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  5) chokidar fs.watch (non-polling) watch individual files should ignore unwatched siblings:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/6 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  6) chokidar fs.watch (non-polling) renamed directory should emit `add` for a file in a renamed directory:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/7 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  7) chokidar fs.watch (non-polling) watch non-existent paths should watch non-existent file and detect add:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/8 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  8) chokidar fs.watch (non-polling) watch non-existent paths should watch non-existent dir and detect addDir/add:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/9 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  9) chokidar fs.watch (non-polling) watch glob patterns should correctly watch and emit based on glob input:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/10 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  10) chokidar fs.watch (non-polling) watch glob patterns should respect negated glob patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/11 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  11) chokidar fs.watch (non-polling) watch glob patterns should traverse subdirs to match globstar patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  12) chokidar fs.watch (non-polling) watch glob patterns should resolve relative paths with glob patterns:
+     Uncaught Error: watch . EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  13) chokidar fs.watch (non-polling) watch glob patterns should correctly handle conflicting glob patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/14 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  14) chokidar fs.watch (non-polling) watch glob patterns should correctly handle intersecting glob patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/15 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  15) chokidar fs.watch (non-polling) watch glob patterns should not confuse glob-like filenames with globs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/16 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  16) chokidar fs.watch (non-polling) watch glob patterns should not prematurely filter dirs against complex globstar patterns:
+     Uncaught Error: watch /mnt/d/projects/chokidar EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  17) chokidar fs.watch (non-polling) watch glob patterns should emit matching dir events:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/18 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  18) chokidar fs.watch (non-polling) watch symlinks should watch symlinked dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/19-link EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  19) chokidar fs.watch (non-polling) watch symlinks should watch symlinked files:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/20/link.txt EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleFile (lib/nodefs-handler.js:255:21)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:473:21)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  20) chokidar fs.watch (non-polling) watch symlinks should follow symlinked files within a normal dir:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/21/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  21) chokidar fs.watch (non-polling) watch symlinks should watch paths with a symlinked parent:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/22-link/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  22) chokidar fs.watch (non-polling) watch symlinks should not recurse indefinitely on circular symlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/23 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  23) chokidar fs.watch (non-polling) watch symlinks should recognize changes following symlinked dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/24-link EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  24) chokidar fs.watch (non-polling) watch symlinks should follow newly created symlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/25 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  25) chokidar fs.watch (non-polling) watch symlinks should watch symlinks as files when followSymlinks:false:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:465:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  26) chokidar fs.watch (non-polling) watch symlinks should watch symlinks within a watched dir as files when followSymlinks:false:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/27 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  27) chokidar fs.watch (non-polling) watch symlinks should not reuse watcher when following a symlink to elsewhere:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/28/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  28) chokidar fs.watch (non-polling) watch symlinks should properly match glob patterns that include a symlinked dir:
+     Uncaught Error: watch test-fixtures/29-link EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  29) chokidar fs.watch (non-polling) watch arrays of paths/globs should watch all paths in an array:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/30/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  30) chokidar fs.watch (non-polling) watch arrays of paths/globs should accommodate nested arrays in input:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/31/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  31) chokidar fs.watch (non-polling) watch options ignoreInitial false should emit `add` events for preexisting files:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/33 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  32) chokidar fs.watch (non-polling) watch options ignoreInitial false should emit `addDir` event for watched dir:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/34 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  33) chokidar fs.watch (non-polling) watch options ignoreInitial false should emit `addDir` events for preexisting dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/35 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  34) chokidar fs.watch (non-polling) watch options ignoreInitial true should ignore inital add events:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/36 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  35) chokidar fs.watch (non-polling) watch options ignoreInitial true should ignore add events on a subsequent .add():
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/37 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  36) chokidar fs.watch (non-polling) watch options ignoreInitial true should notice when a file appears in an empty directory:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/38 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  37) chokidar fs.watch (non-polling) watch options ignoreInitial true should emit a change on a preexisting file as a change:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/39 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  38) chokidar fs.watch (non-polling) watch options ignoreInitial true should not emit for preexisting dirs when depth is 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/40 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  39) chokidar fs.watch (non-polling) watch options ignored should check ignore after stating:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/41/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  40) chokidar fs.watch (non-polling) watch options ignored should ignore the contents of ignored dirs:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/43 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  41) chokidar fs.watch (non-polling) watch options ignored should allow regex/fn ignores:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/44 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  42) chokidar fs.watch (non-polling) watch options depth should not recurse if depth is 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/45 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  43) chokidar fs.watch (non-polling) watch options depth should recurse to specified depth:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/46 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  44) chokidar fs.watch (non-polling) watch options depth should respect depth setting when following symlinks:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/47 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  45) chokidar fs.watch (non-polling) watch options depth should respect depth setting when following a new symlink:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/48 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  46) chokidar fs.watch (non-polling) watch options depth should correctly handle dir events when depth is 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/49 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  47) chokidar fs.watch (non-polling) watch options atomic should ignore vim/emacs/Sublime swapfiles:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/50 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  48) chokidar fs.watch (non-polling) watch options atomic should ignore stale tilde files:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/51 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  49) chokidar fs.watch (non-polling) watch options cwd should emit relative paths based on cwd:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/52 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  50) chokidar fs.watch (non-polling) watch options cwd should emit `addDir` with alwaysStat for renamed directory:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/53 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  51) chokidar fs.watch (non-polling) watch options cwd should allow separate watchers to have different cwds:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/54 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  52) chokidar fs.watch (non-polling) watch options cwd should ignore files even with cwd:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/55 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  53) chokidar fs.watch (non-polling) watch options ignorePermissionErrors false should not watch files without read permissions:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/56 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  54) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not emit add event before a file is fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/60 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  55) chokidar fs.watch (non-polling) watch options awaitWriteFinish should wait for the file to be fully written before emitting the add event:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/61 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  56) chokidar fs.watch (non-polling) watch options awaitWriteFinish should emit with the final stats:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/62 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  57) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not emit change event while a file has not been fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/63 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  58) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not emit change event before an existing file is fully updated:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/64 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  59) chokidar fs.watch (non-polling) watch options awaitWriteFinish should wait for an existing file to be fully updated before emitting the change event:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/65 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  60) chokidar fs.watch (non-polling) watch options awaitWriteFinish should emit change event after the file is fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/66 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  61) chokidar fs.watch (non-polling) watch options awaitWriteFinish should not raise any event for a file that was deleted before fully written:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/67 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  62) chokidar fs.watch (non-polling) getWatched should return the watched paths:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/69 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  63) chokidar fs.watch (non-polling) getWatched should set keys relative to cwd & include added paths:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/70 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  64) chokidar fs.watch (non-polling) unwatch should stop watching unwatched paths:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/71/subdir EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  65) chokidar fs.watch (non-polling) unwatch "before each" hook:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/72 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  66) chokidar fs.watch (non-polling) close should ignore further events on close:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/73 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  67) chokidar fs.watch (non-polling) env variable option override CHOKIDAR_USEPOLLING should make options.usePolling `false` when CHOKIDAR_USEPOLLING is set to false:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/76 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  68) chokidar fs.watch (non-polling) env variable option override CHOKIDAR_USEPOLLING should make options.usePolling `false` when CHOKIDAR_USEPOLLING is set to 0:
+     Uncaught Error: watch /mnt/d/projects/chokidar/test-fixtures/77 EPERM
+      at exports._errnoException (util.js:1026:11)
+      at FSWatcher.start (fs.js:1429:19)
+      at Object.fs.watch (fs.js:1456:11)
+      at createFsWatchInstance (lib/nodefs-handler.js:37:15)
+      at setFsWatchListener (lib/nodefs-handler.js:80:15)
+      at FSWatcher.NodeFsHandler._watchWithNodeFs (lib/nodefs-handler.js:228:14)
+      at FSWatcher.NodeFsHandler._handleDir (lib/nodefs-handler.js:407:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:455:19)
+      at FSWatcher.<anonymous> (lib/nodefs-handler.js:460:16)
+      at FSReqWrap.oncomplete (fs.js:123:15)
+
+  69) chokidar fs.watch (non-polling) "before each" hook: clean for "should unwatch relative paths":
+     TypeError: Cannot read property 'call' of undefined
+  
+
+  70) chokidar fs.watch (non-polling) "before each" hook: clean for "should unwatch relative paths":
+     TypeError: Cannot read property 'call' of undefined
+  
+
+
+
